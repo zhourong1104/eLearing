@@ -10,6 +10,19 @@ m = length(y); % number of training examples
 % You need to return the following variables correctly 
 J = 0;
 grad = zeros(size(theta));
+z = X * theta;
+
+H = (ones(size(z)) + exp(-1 * (z) )) .**(-1);
+
+J = (-1) * sum(log(H')*y + log(1 .- H') * (1 .- y) ) /m + lambda * ...
+     (sum(theta .* theta) - theta(1)**2) /(2*m);
+
+
+grad(1) = sum(X(:,1)' *(H - y)) / m;
+for i = 2: size(theta)
+  grad(i) = sum(X(:,i)' *(H - y)) / m + lambda*theta(i) / m;
+end
+
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
