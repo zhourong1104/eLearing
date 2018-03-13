@@ -14,7 +14,8 @@ J = 0;
 %               You should set J to the cost.
 
 
-
+Htheta =X * theta;
+J = sum((Htheta-y) .* (Htheta-y)) /(2*m);
 
 
 % =========================================================================
