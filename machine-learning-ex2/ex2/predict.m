@@ -15,7 +15,15 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
+z = X * theta;
 
+H = (ones(size(z)) + exp(-1 * (z) )) .**(-1);
+
+for i = 1:m
+  if H(i) >= 0.5
+    p(i) = 1;
+  end
+end
 
 
 
