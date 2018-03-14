@@ -37,8 +37,19 @@ grad = zeros(size(theta));
 %
 
 
+z = X * theta;
+
+H = (ones(size(z)) + exp(-1 * (z) )) .**(-1);
 
 
+J = (-1) * sum(log(H')*y + log(1 .- H') * (1 .- y) ) /m + lambda * ...
+     (sum(theta .* theta) - theta(1)**2) /(2*m);
+
+delta = lambda * theta / m;
+delta(1) = 0;
+     
+grad = X' * (H - y) / m + delta;
+     
 
 
 

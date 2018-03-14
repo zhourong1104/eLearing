@@ -5,6 +5,7 @@ function [h, display_array] = displayData(X, example_width)
 %   displayed array if requested.
 
 % Set example_width automatically if not passed in
+size(X,2)
 if ~exist('example_width', 'var') || isempty(example_width) 
 	example_width = round(sqrt(size(X, 2)));
 end
@@ -47,7 +48,7 @@ for j = 1:display_rows
 		break; 
 	end
 end
-
+size(display_array)
 % Display Image
 h = imagesc(display_array, [-1 1]);
 

@@ -33,9 +33,15 @@ X = [ones(m, 1) X];
 
 
 
-
-
-
+for i = 1: m
+  x_sample = X(i , :);
+  p_j = zeros(num_labels,1);
+  z = all_theta * x_sample';
+  p_j = (ones(size(z)) + exp(-1 * (z) )) .**(-1);
+  [value, pos] = max(p_j);
+  p(i) = pos;
+end
+%p
 % =========================================================================
 
 
