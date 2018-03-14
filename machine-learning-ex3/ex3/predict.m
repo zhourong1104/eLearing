@@ -22,8 +22,14 @@ p = zeros(size(X, 1), 1);
 %
 
 
+z1 = [ones(m,1),X] * Theta1'; 
+h1 = (ones(size(z1)) + exp(-1 * (z1) )) .**(-1);
+A = [ones(m,1), h1];
+z2 = A * Theta2';
+h2 = (ones(size(z2)) + exp(-1 * (z2) )) .**(-1);
 
-
+[value, p] = max(h2,[],2);
+ 
 
 
 
