@@ -82,11 +82,8 @@ end
 
 J = sum(J);
 
-
-
-J = J + 0.5*lambda *(sum(sum(Theta1.**2,1))+sum(sum(Theta2.**2,1)))/m;
-
-
+J = J + lambda *(sum(sum(Theta1((hidden_layer_size+1):end).**2))+...
+         sum(sum(Theta2(num_labels+1:end).**2)))/(2*m);
 
 
 
@@ -95,7 +92,24 @@ J = J + 0.5*lambda *(sum(sum(Theta1.**2,1))+sum(sum(Theta2.**2,1)))/m;
 % =========================================================================
 
 % Unroll gradients
+
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
+Delta2 = 0;
+Delta1 = 0;
+for k= 1:m
+  z2 = X(k,:) * Theta1';
+  a2 = sigmoid(z2);
+  z3 = [1,a2] * Theta2';
+  a3 = sigmoid(z3);
+  delta3 = a3 - y(k);
+  delta2 = reshape(Theta2(num_labels+1:end),num_labels,hidden_layer_size)' *delta3' .* sigmoidGradient(z2');
+  size(delta2);
+  Delta2 = Delta2 + delta3'*[1,a2];
+  Delta1 = Delta1 + delta2*X(k,:);
 
+end
+  Theta2_grad = Delta2/m + lambda * Theta2/m;
+  Theta1_grad = Delta1/m + lambda * Theta1/m;
+grad = [Theta1_grad(:) ; Theta2_grad(:)];
 end
