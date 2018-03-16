@@ -109,16 +109,18 @@ for k= 1:m
   a3_p(pos) = 1; 
   a3_p;
   y(k,:);
-  delta3 = abs(a3_p - y(k,:));
+  delta3 = a3 - y(k,:);
   delta2 = Theta2(:,2:end)' *delta3' .* sigmoidGradient(z2');
   size(delta2);
   Delta2 = Delta2 + delta3'*[1,a2];
   Delta1 = Delta1 + delta2*X(k,:);
 end
-Delta1;
-Delta2;
-Theta2_grad = Delta2/m + lambda * Theta2/m;
-Theta1_grad = Delta1/m + lambda * Theta1/m;
+T1 = Theta1;
+T1(:,1) = 0;
+T2 = Theta2;
+T2(:,1) = 0;
+Theta2_grad = Delta2/m + lambda * T2/m;
+Theta1_grad = Delta1/m + lambda * T1/m;
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 end
